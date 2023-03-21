@@ -1,3 +1,25 @@
+<?php
+// Hubungkan API dengan cURL
+
+$curl = curl_init();
+curl_setopt($curl, CURLOPT_URL, 'https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=UCRedcJdUuUsEMNVRANISM3g&key=AIzaSyDh2oltMb-U1TtLz40OdmwJ_JnRWqZzfQ4');
+
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+$result = curl_exec($curl);
+
+curl_close($curl);
+
+$result = json_decode($result, true);
+
+
+$ytpp = $result['items'][0]['snippet']['thumbnails']['medium']['url'];
+$channel_name = $result['items'][0]['snippet']['title'];
+$subscriber = $result['items'][0]['statistics']['subscriberCount'];
+
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -84,12 +106,12 @@
         <div class="col-md-5">
           <div class="row">
             <div class="col-md-4">
-              <img src="img/profile1.png" alt="gambar" width="100" class="rounded-circle img-thumbnail">
+              <img src="<?= $ytpp; ?>" alt="gambar" width="100" class="rounded-circle img-thumbnail">
             </div>
 
             <div class="col-md-8">
-              <h5>Dwi Star Muda</h5>
-              <p>1rb Subsriber</p>
+              <h5><?= $channel_name; ?></h5>
+              <p><?= $subscriber; ?> Subsribers</p>
             </div>
           </div>
 
